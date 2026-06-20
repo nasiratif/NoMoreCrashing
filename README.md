@@ -8,7 +8,7 @@ NoMoreCrashing is an experimental program that tries to make sure the target pro
 
 ## Usage
 Download the latest release. If the program you want to stop from crashing is 32-bit, run the `x86` variant of NoMoreCrashing, otherwise if it's 64-bit, use the `x64` variant.
-You can either inject into an already running process by selecting it's EXE in the list and clicking *Inject*, or inject at process startup via *Launch & Inject*.
+You can either inject into an already running process by selecting it's EXE in the list and clicking *Inject*, or inject at process startup via *Launch and Inject*.
 
 Your anti-virus might trigger a false-positive. Not at all surprising given the nature of this program. :)
 
