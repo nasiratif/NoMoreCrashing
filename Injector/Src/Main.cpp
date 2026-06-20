@@ -11,8 +11,6 @@
 #define BEA_ENGINE_STATIC
 #include <beaengine/BeaEngine.h>
 
-#pragma comment(lib, "dbghelp.lib")
-
 LONG WINAPI ExceptionHandler(PEXCEPTION_POINTERS ePtrs)
 {
 	DISASM disasm = {};
