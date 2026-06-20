@@ -456,7 +456,7 @@ INT_PTR CALLBACK SettingsDialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM l
 				}
 				else if (MessageBox(hDlg,
 					TEXT(
-						"While debugger injection is generally better at catching exceptions, it is also generally less reliable to use than standard DLL injection, due to reasons like process stuttering and also doesn't play well with programs launched via Steam for instance (it has anti-debugging antics). If you insist on using debug injection, you must also make sure NoMoreCrashing stays open throughout the entirety of the program's duration, otherwise the crash handler gets removed.\n\nAre you sure you want to enable this?"
+						"While debugger injection is generally better at catching exceptions, it is also generally less reliable to use than standard DLL injection, due to reasons like process stuttering and also doesn't play well with programs launched via Steam for instance (it has anti-debugging antics). If you insist on using debug injection, you must also make sure NoMoreCrashing stays open throughout the entirety of the program's duration, otherwise the crash watcher gets removed.\n\nAre you sure you want to enable this?"
 					), TEXT("Warning"), MB_ICONWARNING | MB_YESNO) == IDYES)
 				{
 					debugInjection = true;
