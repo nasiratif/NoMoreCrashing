@@ -1,4 +1,4 @@
-## NoMoreCrashing
+# NoMoreCrashing
 You can use this to stop a program from crashing. Compatible with both 64 and 32-bit Windows applications. It doesn't work 100% of the time, see Limitations.
 
 ## How it works
@@ -9,6 +9,9 @@ NoMoreCrashing is an experimental program that tries to make sure the target pro
 ## Usage
 Download the latest release. If the program you want to stop from crashing is 32-bit, run the `x86` variant of NoMoreCrashing, otherwise if it's 64-bit, use the `x64` variant.
 You can either inject into an already running process by selecting it's EXE in the list and clicking *Inject*, or inject at process startup via *Launch & Inject*.
+
+## Demo
+![Crash prevention demo](https://github.com/nasiratif/NoMoreCrashing/blob/46ab868d2105841a5296bba29e2f978edfbe40ab/Media/Demo.gif)
 
 ## Limitations
 - Programs crash for a variety of different reasons so it's not always as simple as just continuing execution and ignoring the exception. Tbe results are anti-climatic at times; you might just get a freeze instead of the program continuing on smoothly
