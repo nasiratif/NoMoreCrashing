@@ -10,6 +10,10 @@ NoMoreCrashing is an experimental program that tries to make sure the target pro
 Download the latest release. If the program you want to stop from crashing is 32-bit, run the `x86` variant of NoMoreCrashing, otherwise if it's 64-bit, use the `x64` variant.
 You can either inject into an already running process by selecting it's EXE in the list and clicking *Inject*, or inject at process startup via *Launch & Inject*.
 
+Your anti-virus might trigger a false-positive. Not at all surprising given the nature of this program. :)
+
+If that does happen, make sure to excuse this program from it.
+
 ## Demo
 ![Crash prevention demo](https://github.com/nasiratif/NoMoreCrashing/blob/46ab868d2105841a5296bba29e2f978edfbe40ab/Media/Demo.gif)
 
@@ -24,8 +28,6 @@ This software is distributed under the Unlicense license.
 
 ## Credits
 [BeaEngine](https://github.com/BeaEngine/beaengine), utilizing it's LDE capabilities
-
-
 
 [x64 function hooking code](https://kylehalladay.com/blog/2020/11/13/Hooking-By-Example.html)
 
