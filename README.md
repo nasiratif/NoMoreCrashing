@@ -16,6 +16,7 @@ You can either inject into an already running process by selecting it's EXE in t
 ## Limitations
 - Programs crash for a variety of different reasons so it's not always as simple as just continuing execution and ignoring the exception. Tbe results are anti-climatic at times; you might just get a freeze instead of the program continuing on smoothly
 - Stack-buffer overruns/stack-overflows aren't handled. The former being a fail-fast exception so Windows skips all exception handling for it all-together, the latter clobbers up the entire stack so the exception handler can't even run (debug injection *might* workaround these problems, though I haven't tested)
+- If not using debug injection, child processes won't be injected. I could probably just detour `CreateProcess` but with my method of DLL injection that's not gonna work if the CPU architectures differ
 - You probably shouldn't use this on serious occasions. By continuing execution after a crash you're stepping into big undefined behavior territory as the state of the program is now effectively corrupted & unpredictable. I am not responsible for anything that goes wrong with this :) this was made just for fun!
 
 ## License
