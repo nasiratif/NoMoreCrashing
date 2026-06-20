@@ -326,6 +326,7 @@ void InjectDLL(HWND hDlg, HANDLE hProcess, bool showSuccess = true)
 		return;
 	}
 
+	// Find location of last slash:
 	auto pos = 0;
 	auto slashPos = pos;
 	auto str = dllFileName;
@@ -444,7 +445,7 @@ INT_PTR CALLBACK SettingsDialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM l
 	{
 		switch (wParam)
 		{
-		case ID_OK:
+		case IDOK:
 		{
 			if (Button_GetCheck(hUseDebug) == BST_CHECKED)
 			{
@@ -474,7 +475,7 @@ INT_PTR CALLBACK SettingsDialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM l
 			}
 			break;
 		}
-		case ID_CANCEL:
+		case IDCANCEL:
 			goto close;
 		}
 		break;
@@ -503,7 +504,7 @@ INT_PTR CALLBACK LaunchDialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lPa
 		if (!*currentWorkingDir)
 		{
 			auto start = fileName;
-			auto end = PathFindFileName(fileName);
+			auto end = PathFindFileName(fileName) - 1;
 			auto dest = appWorkingDir;
 			while (start < end)
 				*(dest++) = *(start++);
@@ -529,7 +530,7 @@ INT_PTR CALLBACK LaunchDialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lPa
 	{
 		switch (wParam)
 		{
-		case ID_OK:
+		case IDOK:
 		{
 			Edit_GetText(hFileName, appFileName, ARRAYSIZE(appFileName));
 			Edit_GetText(hWorkingDir, appWorkingDir, ARRAYSIZE(appWorkingDir));
@@ -573,7 +574,7 @@ INT_PTR CALLBACK LaunchDialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lPa
 			}
 			break;
 		}
-		case ID_CANCEL:
+		case IDCANCEL:
 			goto close;
 		case ID_BROWSEF:
 		{
@@ -712,7 +713,7 @@ INT_PTR CALLBACK MainDialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lPara
 			DialogBox(hInst, MAKEINTRESOURCE(IDD_LAUNCH), hDlg, LaunchDialogProc);
 			break;
 		}
-		case ID_CANCEL:
+		case IDCANCEL:
 			goto close;
 		case ID_REFRESH:
 		{
