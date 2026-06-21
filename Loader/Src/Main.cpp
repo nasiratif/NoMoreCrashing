@@ -391,7 +391,7 @@ void RefreshProcessList(HWND listBox)
 	EnumProcesses(processes, sizeof(processes), &numProcesses);
 	numProcesses /= sizeof(DWORD);
 
-	SendMessage(listBox, LB_RESETCONTENT, NULL, NULL);
+	ListBox_ResetContent(listBox);
 	for (DWORD i = 0; i < numProcesses; ++i)
 	{
 		auto pid = processes[i];
@@ -420,8 +420,10 @@ void RefreshProcessList(HWND listBox)
 			StringCbPrintf(pidName, sizeof(pidName), TEXT("%u"), pid);
 			StringCbCat(name, sizeof(name), pidName);
 			StringCbCat(name, sizeof(name), TEXT(")"));
-			auto pos = SendMessage(listBox, LB_ADDSTRING, 0, (LPARAM)name);
-			SendMessage(listBox, LB_SETITEMDATA, pos, (LPARAM)pid);
+
+			auto pos = ListBox_AddString(listBox, name);
+			ListBox_SetItemData(listBox, pos, pid);
+
 			CloseHandle(procHandle);
 		}
 	}
@@ -680,10 +682,10 @@ INT_PTR CALLBACK MainDialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lPara
 		{
 		case ID_INJECT:
 		{
-			auto selIndex = SendMessage(hProgramList, LB_GETCURSEL, NULL, NULL);
+			auto selIndex = ListBox_GetCurSel(hProgramList);
 			if (selIndex != LB_ERR)
 			{
-				auto pid = (DWORD)SendMessage(hProgramList, LB_GETITEMDATA, selIndex, NULL);
+				auto pid = (DWORD)ListBox_GetItemData(hProgramList, selIndex);
 				if (debugInjection)
 				{
 					AddDebugThread(hDlg, pid);
