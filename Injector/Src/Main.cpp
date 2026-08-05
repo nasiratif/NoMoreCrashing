@@ -1,6 +1,6 @@
 /*
 
-	NoMoreCrashing DLL Injector v1.0
+	NoMoreCrashing DLL Injector v1.0.1
 	Authored by Nassic (https://github.com/nasiratif/NoMoreCrashing)
 
 */

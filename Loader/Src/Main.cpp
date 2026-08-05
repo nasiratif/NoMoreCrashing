@@ -1,6 +1,6 @@
 /*
 
-	NoMoreCrashing Loader v1.0
+	NoMoreCrashing Loader v1.0.1
 	Authored by Nassic (https://github.com/nasiratif/NoMoreCrashing)
 
 */
@@ -54,7 +54,7 @@ struct ThreadContext
 bool debugInjection = false;
 bool sawDebugWarning = false;
 
-TCHAR appFileName[MAX_PATH] = TEXT("");
+TCHAR appCmdLine[MAX_PATH] = TEXT("");
 TCHAR appWorkingDir[MAX_PATH] = TEXT("");
 // -----
 
@@ -106,7 +106,7 @@ DWORD WINAPI DebugThread(LPVOID pThread)
 		startupInfo.cb = sizeof(startupInfo);
 		PROCESS_INFORMATION processInfo;
 
-		success = CreateProcess(NULL, appFileName, NULL, NULL, FALSE, CREATE_SUSPENDED | DEBUG_PROCESS, NULL, appWorkingDir, &startupInfo, &processInfo);
+		success = CreateProcess(NULL, appCmdLine, NULL, NULL, FALSE, CREATE_SUSPENDED | DEBUG_PROCESS, NULL, appWorkingDir, &startupInfo, &processInfo);
 		if (success)
 		{
 			success = GetProcessImageFileName(processInfo.hProcess, self->ret, ARRAYSIZE(self->ret));
@@ -498,8 +498,11 @@ INT_PTR CALLBACK LaunchDialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lPa
 
 	auto setFilename = [](HWND hFileName, HWND hWorkingDir, const TCHAR* fileName)
 	{
-		Edit_SetText(hFileName, fileName);
-		StringCbCopy(appFileName, sizeof(appFileName), fileName);
+		*appCmdLine = TEXT('\0');
+		StringCbCat(appCmdLine, sizeof(appCmdLine), TEXT("\""));
+		StringCbCat(appCmdLine, sizeof(appCmdLine), fileName);
+		StringCbCat(appCmdLine, sizeof(appCmdLine), TEXT("\""));
+		Edit_SetText(hFileName, appCmdLine);
 
 		TCHAR currentWorkingDir[MAX_PATH];
 		Edit_GetText(hWorkingDir, currentWorkingDir, ARRAYSIZE(currentWorkingDir));
@@ -522,7 +525,7 @@ INT_PTR CALLBACK LaunchDialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lPa
 	{
 		DragAcceptFiles(hDlg, TRUE);
 
-		Edit_SetText(hFileName, appFileName);
+		Edit_SetText(hFileName, appCmdLine);
 		Edit_SetText(hWorkingDir, appWorkingDir);
 		break;
 	}
@@ -534,7 +537,7 @@ INT_PTR CALLBACK LaunchDialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lPa
 		{
 		case IDOK:
 		{
-			Edit_GetText(hFileName, appFileName, ARRAYSIZE(appFileName));
+			Edit_GetText(hFileName, appCmdLine, ARRAYSIZE(appCmdLine));
 			Edit_GetText(hWorkingDir, appWorkingDir, ARRAYSIZE(appWorkingDir));
 
 			if (debugInjection)
@@ -547,7 +550,7 @@ INT_PTR CALLBACK LaunchDialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lPa
 				STARTUPINFO startupInfo = {};
 				startupInfo.cb = sizeof(startupInfo);
 				PROCESS_INFORMATION processInfo;
-				if (CreateProcess(NULL, appFileName, NULL, NULL, FALSE, CREATE_SUSPENDED, NULL, appWorkingDir, &startupInfo, &processInfo))
+				if (CreateProcess(NULL, appCmdLine, NULL, NULL, FALSE, CREATE_SUSPENDED, NULL, appWorkingDir, &startupInfo, &processInfo))
 				{
 					if (ArchMatches(processInfo.hProcess))
 					{
@@ -649,7 +652,7 @@ INT_PTR CALLBACK LaunchDialogProc(HWND hDlg, UINT msg, WPARAM wParam, LPARAM lPa
 	return 0;
 
 close:
-	Edit_GetText(hFileName, appFileName, ARRAYSIZE(appFileName));
+	Edit_GetText(hFileName, appCmdLine, ARRAYSIZE(appCmdLine));
 	Edit_GetText(hWorkingDir, appWorkingDir, ARRAYSIZE(appWorkingDir));
 	EndDialog(hDlg, 0);
 	return 0;
